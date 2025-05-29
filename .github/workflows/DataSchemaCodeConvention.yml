@@ -1,0 +1,20 @@
+name: SQL Linter
+
+on:
+  push:
+    paths:
+      - '2.5-GitHubActions/DataSchema.sql'
+      - '.github/workflows/DataSchemaCodeConvention.yml'
+
+jobs:
+  sql-lint-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install sql-lint
+        run: npm install -g sql-lint
+
+      - name: Run sql-lint on DataSchema.sql
+        run: sql-lint 2.5-GitHubActions/DataSchema.sql
