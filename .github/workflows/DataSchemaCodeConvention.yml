@@ -1,4 +1,4 @@
-name: Check Data Schema Code Conventions
+name: SQL Linter
 
 on:
   push:
