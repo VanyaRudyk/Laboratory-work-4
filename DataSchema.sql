@@ -1,5 +1,5 @@
 CREATE TABLE Person (
-    name VARCHAR(30) NOT NULL CHECK (LENGTH(name) <= 30 AND name LIKE '%_'), 
+    name VARCHAR(30) NOT NULL CHECK (LENGTH(name) <= 30 AND name LIKE '%_'),
     age INT CHECK (age > 0),
     PRIMARY KEY (name)
 );
@@ -24,8 +24,9 @@ CREATE TABLE Moderator (
 
 CREATE TABLE Content (
     type VARCHAR(50) CHECK (
-        LENGTH(type) < 50 AND
-        type LIKE 'текст%' OR type LIKE 'зображення%' OR type LIKE 'відео%'
+        LENGTH(type) < 50 AND (
+            type LIKE 'текст%' OR type LIKE 'зображення%' OR type LIKE 'відео%'
+        )
     ),
     status VARCHAR(10) CHECK (status IN ('активний', 'видалений')),
     PRIMARY KEY (type)
@@ -35,8 +36,9 @@ CREATE TABLE File (
     content_type VARCHAR(50),
     size INT CHECK (size > 0),
     format VARCHAR(10) CHECK (
-        LENGTH(format) < 10 AND
-        format LIKE 'jpg' OR format LIKE 'png' OR format LIKE 'mp4' OR format LIKE 'pdf'
+        LENGTH(format) < 10 AND (
+            format = 'jpg' OR format = 'png' OR format = 'mp4' OR format = 'pdf'
+        )
     ),
     PRIMARY KEY (content_type, format),
     FOREIGN KEY (content_type) REFERENCES Content(type)
