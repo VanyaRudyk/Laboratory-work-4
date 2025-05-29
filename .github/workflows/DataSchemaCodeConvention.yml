@@ -3,7 +3,7 @@ name: SQL Linter
 on:
   push:
     paths:
-      - '2.5-GitHubActions/DataSchema.sql'
+      - 'DataSchema.sql'
       - '.github/workflows/DataSchemaCodeConvention.yml'
 
 jobs:
@@ -17,4 +17,4 @@ jobs:
         run: npm install -g sql-lint
 
       - name: Run sql-lint on DataSchema.sql
-        run: sql-lint 2.5-GitHubActions/DataSchema.sql
+        run: sql-lint DataSchema.sql
