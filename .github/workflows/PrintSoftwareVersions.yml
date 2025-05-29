@@ -2,25 +2,26 @@ name: Print Software Versions
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main 
 
 jobs:
-  PrintProcessingSoftware:
-    name: Print Node.js Version
+  PrintNodeVersion:
     runs-on: ubuntu-latest
     steps:
-      - name: Show Node.js Version
+      - name: Print Node.js Version
         run: node --version
 
-  PrintDatabaseSoftware:
-    name: Print MongoDB Version
+  PrintMongoDBVersion:
     runs-on: ubuntu-latest
-    needs: [PrintProcessingSoftware]
+    needs: [PrintNodeVersion]
     steps:
-      - name: Install MongoDB Tools
+      - name: Install MongoDB Shell
         run: |
+          wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
+          echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
           sudo apt-get update
-          sudo apt-get install -y mongodb-clients
+          sudo apt-get install -y mongodb-org-shell
 
-      - name: Show MongoDB Version
-        run: mongod --version
+      - name: Print MongoDB Version
+        run: mongosh --version
